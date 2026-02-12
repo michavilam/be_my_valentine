@@ -1,0 +1,185 @@
+<!-- Hola amor, si estás leyendo esto quiero que sepas que te amo-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+   
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> San Valentin</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ffb3d9 0%, #ffd4e5 100%);
+            font-family: 'Trebuchet MS', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            text-align: center;
+            background: white;
+            padding: 60px 40px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(255, 105, 180, 0.3);
+            max-width: 500px;
+            width: 100%;
+        }
+        
+        h1 {
+            color: #ff1493;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.2);
+        }
+        
+        .heart {
+            font-size: 4em;
+            margin-bottom: 20px;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 15px 40px;
+            font-size: 1.3em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-si {
+            background: #ff1493;
+            color: white;
+        }
+        
+        .btn-si:hover {
+            background: #ff69b4;
+            transform: scale(1.1);
+        }
+        
+        .btn-no {
+            background: #f0f0f0;
+            color: #666;
+        }
+        
+        .btn-no:hover {
+            background: #e0e0e0;
+            transform: scale(0.95);
+        }
+        
+        .response {
+            margin-top: 30px;
+            font-size: 1.5em;
+            color: #ff1493;
+            font-weight: bold;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="heart">🩵</div>
+        <h1>¿Quieres ser mi San Valentin mi amor?</h1>
+        <div class="buttons">
+            <button class="btn-si" onclick="respuestaSi()">Sí</button>
+            <button class="btn-no" onclick="respuestaNo()">No</button>
+        </div>
+        <div class="response" id="response"></div>
+    </div>
+
+    <script>
+        let nivelNo = 0;
+        const preguntas = [
+            '¿Quieres ser mi San Valentin?',
+            '¿Segurisimo?',
+            '¿Segurisisisimo?',
+            '¿Enserio nooo? 🥺',
+            'Ultimo chance'
+        ];
+                       
+        function respuestaSi() {
+            const response = document.getElementById('response');
+            const h1 = document.querySelector('h1');
+            const heart = document.querySelector('.heart');
+
+            // Ocultar la pregunta y el corazón
+            h1.style.display = 'none';
+            heart.style.display = 'none';
+            response.innerHTML = 'Siii! Sabía que dirías que si, obvi 😌<br><br>Te amoooo!🩵';
+            response.style.display = 'block';
+            response.style.fontSize = '2em';
+            
+           
+            document.querySelector('.buttons').style.display = 'none';
+            
+            
+            crearConfeti();
+        }
+        
+        function respuestaNo() {
+            nivelNo++;
+            const h1 = document.querySelector('h1');
+            const btnNo = document.querySelector('.btn-no');
+            
+            if (nivelNo < preguntas.length) {
+                h1.textContent = preguntas[nivelNo];
+                // Hacer el botón No más pequeño cada vez
+                btnNo.style.transform = `scale(${1 - (nivelNo * 0.2)})`;
+            } else {
+                // Desaparecer el botón de No completamente
+                h1.textContent = 'Upsi, creo que solo queda una opción';
+                btnNo.style.display = 'none';
+            }
+        }
+    
+        function crearConfeti() {
+            const emojis = ['💕', '🩵', '💗', '❤️'];
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                    heart.style.position = 'fixed';
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.top = '-50px';
+                    heart.style.fontSize = Math.random() * 30 + 20 + 'px';
+                    heart.style.transition = 'all 3s ease-in';
+                    heart.style.pointerEvents = 'none';
+                    heart.style.zIndex = '1000';
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        heart.style.top = '100vh';
+                        heart.style.opacity = '0';
+                    }, 10);
+                    
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 3000);
+                }, i * 100);
+            }
+        }
+    </script>
+</body>
+</html>
